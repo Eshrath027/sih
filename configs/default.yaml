@@ -1,0 +1,127 @@
+# OceanEmbed pipeline configuration
+# Every choice the pipeline makes lives here. Change this file, not the code.
+
+# ---------------------------------------------------------------- domain
+# The North Indian Ocean box from the problem statement (5N-30N, 45E-105E).
+# These bounds define the canonical grid that EVERY dataset is forced onto.
+# They are deliberately aligned to NOAA OISST's native cell centres
+# (x.125, x.375, x.625, x.875) so SST needs no interpolation at all.
+domain:
+  lat_min: 5.0
+  lat_max: 30.0
+  lon_min: 45.0
+  lon_max: 105.0
+  resolution: 0.25          # degrees; the problem statement mandates this
+  # Resulting grid: 100 latitude points x 240 longitude points = 24,000 cells
+
+# ---------------------------------------------------------------- time
+# This window is the INTERSECTION of all seven inputs, not a preference.
+# Verified against the Copernicus catalogue by scripts/check_coverage.py:
+#
+#   SST (OISST)   1981 - present
+#   sea level     1993 - 2026
+#   salinity      1993 - 2024
+#   currents      1993 - 2026
+#   GLORYS        1993 - 2026
+#   winds         1994-06-01 - 2009-10-31   <-- the binding constraint
+#
+# The CMEMS L4 wind reanalysis stops in October 2009 and the near-real-time
+# product does not begin until June 2024, leaving a 15-year hole. Rather than
+# source winds from ERA5 (a second account, a separate API key, slow queued
+# downloads), the project period moves to the window where everything
+# genuinely overlaps. That also yields 5,631 candidate days instead of the
+# 2,192 a 2015-2020 window would have given.
+#
+# Caveat to state in any write-up: before ~2010 there were no salinity
+# satellites, so the salinity product is a reconstruction blending in-situ
+# observations with statistical relationships rather than a direct satellite
+# retrieval.
+time:
+  start: "1994-06-01"
+  end: "2009-10-31"
+  # How the days are split for machine learning. Split by TIME, never
+  # randomly: neighbouring days are nearly identical, so a random split
+  # would leak answers from training into testing and inflate the scores.
+  splits:
+    train: ["1994-06-01", "2006-12-31"]
+    val:   ["2007-01-01", "2007-12-31"]
+    test:  ["2008-01-01", "2009-10-31"]
+
+# ---------------------------------------------------------------- depths
+# The 15 standard depth levels the problem statement requires, in metres.
+depths: [0, 5, 10, 20, 30, 50, 75, 100, 125, 150, 200, 300, 500, 700, 1000]
+
+# ---------------------------------------------------------------- inputs
+# The surface variables the model sees. Canonical names used everywhere
+# downstream; each source module maps its own naming onto these.
+inputs:
+  variables: [sst, sla, sss, uo, vo, uwnd, vwnd]
+  # sst  - sea surface temperature      (degC)
+  # sla  - sea level anomaly            (m)     the surface "bulge"
+  # sss  - sea surface salinity         (psu)
+  # uo   - surface current, eastward    (m/s)
+  # vo   - surface current, northward   (m/s)
+  # uwnd - 10m wind, eastward           (m/s)
+  # vwnd - 10m wind, northward          (m/s)
+
+# ---------------------------------------------------------------- target
+target:
+  variable: thetao                 # sea water potential temperature (degC)
+  source: glorys
+
+# ---------------------------------------------------------------- sources
+# Which product provides each variable, and how to reach it.
+# 'winds' is deliberately swappable: set provider to 'era5' later without
+# touching any other part of the pipeline.
+sources:
+  sst:
+    provider: oisst                # NOAA, open access, no login needed
+    url_template: "https://www.ncei.noaa.gov/data/sea-surface-temperature-optimum-interpolation/v2.1/access/avhrr/{ym}/oisst-avhrr-v02r01.{ymd}.nc"
+  sla:
+    provider: cmems
+    # The all-satellite DUACS L4 product is published at 0.125 degree; there
+    # is no 0.25 degree version of it. That is fine - the pipeline
+    # area-averages 2x2 native cells into each target cell, which is more
+    # accurate than sampling a coarser product would have been.
+    dataset_id: cmems_obs-sl_glo_phy-ssh_my_allsat-l4-duacs-0.125deg_P1D
+    variables: [sla]
+  sss:
+    provider: cmems
+    dataset_id: cmems_obs-mob_glo_phy-sss_my_multi_P1D
+    variables: [sos]
+  currents:
+    provider: cmems
+    # The trailing '-m' is part of the identifier, not a typo: it marks the
+    # monthly-processed multi-year stream. Omitting it is a DatasetNotFound.
+    dataset_id: cmems_obs-mob_glo_phy-cur_my_0.25deg_P1D-m
+    variables: [uo, vo]
+  winds:
+    provider: cmems                # swap to 'era5' to use the CDS product
+    # The gap-free L4 wind product is only published hourly. Taking the
+    # 0.25 degree version rather than 0.125 degree cuts the download roughly
+    # fourfold and matches our target grid natively; the pipeline averages
+    # the 24 hourly steps into a daily mean on read.
+    dataset_id: cmems_obs-wind_glo_phy_my_l4_0.25deg_PT1H
+    variables: [eastward_wind, northward_wind]
+  glorys:
+    provider: cmems
+    dataset_id: cmems_mod_glo_phy_my_0.083deg_P1D-m
+    variables: [thetao]
+    # Native 1/12 degree. Nests exactly 3x3 inside our 0.25 degree cells,
+    # so it is area-averaged rather than interpolated (mask-aware, correct
+    # for ocean fields that stop at coastlines).
+
+# ---------------------------------------------------------------- paths
+paths:
+  raw: data/raw
+  interim: data/interim
+  processed: data/processed
+  export: data/export
+  reports: reports
+
+# ---------------------------------------------------------------- export
+# Shard settings for uploading to Colab / Kaggle for GPU training.
+export:
+  shard_by: year                   # one compressed file per year
+  compression: zstd
+  compression_level: 5

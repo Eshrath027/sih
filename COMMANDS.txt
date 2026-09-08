@@ -1,0 +1,247 @@
+===============================================================================
+  OCEANEMBED - COMMANDS TO RUN
+  SIH Problem Statement 26066 - Subsurface ocean temperature from satellites
+===============================================================================
+
+  Project folder:  /home/eshrath/sih
+  Always run from there. Always use .venv/bin/python (not plain python).
+
+  Start every session with:
+
+      cd /home/eshrath/sih
+
+
+===============================================================================
+  QUICK VERSION - the 2 commands that do everything
+===============================================================================
+
+      .venv/bin/python -m oceanembed fetch --every 112
+      .venv/bin/python -m oceanembed all   --every 112
+
+  First one downloads. Second one processes.
+  Both are safe to re-run: they skip work already done.
+
+  The number after --every controls how much data. See "HOW MUCH DATA" below.
+
+
+===============================================================================
+  STEP BY STEP - what each stage does
+===============================================================================
+
+  ---------------------------------------------------------------------------
+  STEP 0.  Check everything is set up
+  ---------------------------------------------------------------------------
+
+      .venv/bin/python -m oceanembed check --every 112
+
+  Shows: the time period, the grid, whether your login is found, how many
+  days are downloaded, and how many are processed.
+  Run this any time you want to know where you are.
+  Takes: 2 seconds.
+
+
+  ---------------------------------------------------------------------------
+  STEP 1.  Download the data
+  ---------------------------------------------------------------------------
+
+      .venv/bin/python -m oceanembed fetch --every 112
+
+  Downloads all 7 surface measurements plus the GLORYS answer key.
+  Takes: about 30-60 minutes for 51 days.
+  Produces: data/raw/
+
+  If it stops or you close the terminal, just run it again.
+  It only downloads files you do not already have.
+
+  To download one variable at a time (useful if one is failing):
+
+      .venv/bin/python -m oceanembed fetch --source sst      --every 112
+      .venv/bin/python -m oceanembed fetch --source sla      --every 112
+      .venv/bin/python -m oceanembed fetch --source sss      --every 112
+      .venv/bin/python -m oceanembed fetch --source currents --every 112
+      .venv/bin/python -m oceanembed fetch --source winds    --every 112
+      .venv/bin/python -m oceanembed fetch --source glorys   --every 112
+
+  To see the size before downloading anything:
+
+      .venv/bin/python -m oceanembed fetch --dry-run --every 112
+
+
+  ---------------------------------------------------------------------------
+  STEP 2.  Process it all (runs steps 2a to 2e in one go)
+  ---------------------------------------------------------------------------
+
+      .venv/bin/python -m oceanembed all --every 112
+
+  Takes: about 5-15 minutes for 51 days.
+  This is the normal way to run it. The individual stages below are only
+  needed if something goes wrong and you want to redo one part.
+
+
+  ---------------------------------------------------------------------------
+  STEP 2a.  Join everything onto one map, one file per day
+  ---------------------------------------------------------------------------
+
+      .venv/bin/python -m oceanembed harmonize --every 112
+
+  Produces: data/interim/daily/1995-08-23.nc  (one file per day)
+
+
+  ---------------------------------------------------------------------------
+  STEP 2b.  Stack all the days together
+  ---------------------------------------------------------------------------
+
+      .venv/bin/python -m oceanembed build-cube --every 112
+
+  Produces: data/processed/nio_surface.zarr   (the inputs)
+            data/processed/nio_temp3d.zarr    (the answer key)
+
+
+  ---------------------------------------------------------------------------
+  STEP 2c.  Work out the numbers needed to scale the data for training
+  ---------------------------------------------------------------------------
+
+      .venv/bin/python -m oceanembed stats --every 112
+
+  Produces: data/processed/norm_stats.json
+            data/processed/climatology.nc
+
+
+  ---------------------------------------------------------------------------
+  STEP 2d.  Check the data is not broken
+  ---------------------------------------------------------------------------
+
+      .venv/bin/python -m oceanembed qc --every 112
+
+  Produces: reports/qc_report.json
+            reports/surface_inputs.png    <-- open this, it should look
+            reports/mean_profile.png          like an ocean
+            reports/sst_timeseries.png
+
+  LOOK AT THESE PICTURES. If the maps look wrong, something is wrong.
+
+
+  ---------------------------------------------------------------------------
+  STEP 2e.  Pack it for Google Colab
+  ---------------------------------------------------------------------------
+
+      .venv/bin/python -m oceanembed pack --every 112
+
+  Produces: data/export/oceanembed_1995.npz  (one per year)
+            data/export/manifest.json
+            data/export/norm_stats.json
+
+  THIS FOLDER IS THE FINAL DATASET. Upload it to Colab to train.
+
+
+===============================================================================
+  HOW MUCH DATA  -  the --every number
+===============================================================================
+
+  --every controls how many days you use. Smaller = more data.
+
+      --every 112     51 days      1 GB      ~30 min     <-- testing the flow
+      --every 30     188 days      4 GB      ~2 hours    <-- first real try
+      --every 10     563 days     10 GB      ~5 hours    <-- for a good model
+      --every 3    1,877 days     34 GB      ~15 hours   <-- best realistic
+      --every 1    5,632 days    101 GB      too big     <-- do not do this
+
+  IMPORTANT: use the SAME number for fetch and for all.
+  Mixing them means processing days you never downloaded.
+
+  To add more data later, just lower the number and re-run both commands.
+  Days already on disk are never downloaded twice.
+
+      .venv/bin/python -m oceanembed fetch --every 30
+      .venv/bin/python -m oceanembed all   --every 30
+
+
+===============================================================================
+  UNDERSTANDING THE PROJECT
+===============================================================================
+
+  How the different datasets get connected (worked example, real numbers):
+
+      .venv/bin/python scripts/explain_joining.py
+
+  What time period each dataset covers:
+
+      .venv/bin/python scripts/check_coverage.py
+
+  Interactive visual explainer (open in a browser):
+
+      https://claude.ai/code/artifact/b81f0552-6ef2-4c26-a2e0-d6db331c81a5
+
+
+===============================================================================
+  IF SOMETHING GOES WRONG
+===============================================================================
+
+  "Copernicus Marine credentials not found"
+      Your .env file is missing or in the wrong place.
+      It must be at:  /home/eshrath/sih/.env
+      NOT inside the oceanembed folder.
+      Check with:  cat .env
+
+  "DatasetNotFound"
+      A dataset ID in configs/default.yaml is wrong.
+      Check the ID against the catalogue.
+
+  "CoordinatesOutOfDatasetBounds"
+      You asked for dates the dataset does not cover.
+      Run: .venv/bin/python scripts/check_coverage.py
+
+  Exit code 137, or "Killed"
+      The computer ran out of memory.
+      Use a bigger --every number, or do one year at a time:
+          .venv/bin/python -m oceanembed all --start 1995-01-01 --end 1995-12-31
+
+  Download stopped halfway
+      Just run the fetch command again. It resumes.
+
+  Want to start completely fresh (deletes processed data, keeps downloads)
+      rm -rf data/interim data/processed data/export reports
+      .venv/bin/python -m oceanembed all --every 112
+
+  Want to delete downloads too (you will have to download again)
+      rm -rf data
+
+
+===============================================================================
+  CURRENT SETTINGS  (in configs/default.yaml)
+===============================================================================
+
+  Region        5N to 30N, 45E to 105E  (North Indian Ocean)
+  Grid          100 x 240 squares, 0.25 degrees, about 25 km each
+  Time period   1994-06-01 to 2009-10-31
+
+     WHY THIS PERIOD: it is the only window where all 7 inputs exist.
+     The CMEMS wind product stops on 2009-10-31 and does not restart
+     until 2024. Everything else covers 1993 onwards.
+
+  Inputs (7)    sst    sea surface temperature
+                sla    sea level anomaly (the surface bulge)
+                sss    sea surface salinity
+                uo, vo surface currents
+                uwnd, vwnd  winds
+
+  Answer key    thetao  temperature at 15 depths, from GLORYS
+                0, 5, 10, 20, 30, 50, 75, 100, 125, 150,
+                200, 300, 500, 700, 1000 metres
+
+  Splits        train  1994-06-01 to 2006-12-31
+                val    2007-01-01 to 2007-12-31
+                test   2008-01-01 to 2009-10-31
+
+
+===============================================================================
+  WHAT IS NOT BUILT YET
+===============================================================================
+
+  [ ] The model              (U-Net with attention bottleneck)
+  [ ] The training script
+  [ ] Validation against real ARGO float measurements
+
+  The data pipeline above is finished. The model is the next piece.
+
+===============================================================================
