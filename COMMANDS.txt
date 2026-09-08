@@ -157,6 +157,44 @@
 
 
 ===============================================================================
+  STEP 3.  TRAIN THE MODEL
+===============================================================================
+
+  Quick check that training works at all (2 minutes, on this CPU):
+
+      .venv/bin/python -m oceanembed.train --epochs 3 --samples-per-day 4 \
+          --width 16 --batch-size 8 --num-workers 0 --run-name smoketest
+
+  Real training (needs a GPU - use Google Colab):
+
+      .venv/bin/python -m oceanembed.train --epochs 60 --run-name baseline
+
+  Results go to runs/<run-name>/
+      best.pt        the best model
+      last.pt        the final model
+      history.json   loss and skill scores for every epoch
+
+  Useful options:
+      --width 64            bigger model
+      --patch 96            larger training windows
+      --samples-per-day 32  more crops per day, longer epochs
+      --epochs 100          train longer
+
+  ON GOOGLE COLAB
+      1. Upload the data/export folder to Google Drive
+      2. New notebook, Runtime -> Change runtime type -> T4 GPU
+      3. In a cell:
+             !pip install -q torch
+             from google.colab import drive; drive.mount('/content/drive')
+             !git clone <your repo>   OR upload the oceanembed folder
+             !python -m oceanembed.train --export-dir /content/drive/MyDrive/export \
+                 --epochs 60 --run-name baseline
+
+  WARNING: 51 days is NOT enough to train a good model. It only proves the
+  code works. Download more days first (see HOW MUCH DATA above).
+
+
+===============================================================================
   UNDERSTANDING THE PROJECT
 ===============================================================================
 
