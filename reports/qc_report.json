@@ -1,0 +1,281 @@
+{
+  "coverage": {
+    "requested": 5632,
+    "present": 51,
+    "missing": 5581,
+    "completeness": 0.0091,
+    "gaps": [
+      {
+        "start": "1994-06-02",
+        "days": 111,
+        "end": "1994-09-20"
+      },
+      {
+        "start": "1994-09-22",
+        "days": 111,
+        "end": "1995-01-10"
+      },
+      {
+        "start": "1995-01-12",
+        "days": 111,
+        "end": "1995-05-02"
+      },
+      {
+        "start": "1995-05-04",
+        "days": 111,
+        "end": "1995-08-22"
+      },
+      {
+        "start": "1995-08-24",
+        "days": 111,
+        "end": "1995-12-12"
+      },
+      {
+        "start": "1995-12-14",
+        "days": 111,
+        "end": "1996-04-02"
+      },
+      {
+        "start": "1996-04-04",
+        "days": 111,
+        "end": "1996-07-23"
+      },
+      {
+        "start": "1996-07-25",
+        "days": 111,
+        "end": "1996-11-12"
+      },
+      {
+        "start": "1996-11-14",
+        "days": 111,
+        "end": "1997-03-04"
+      },
+      {
+        "start": "1997-03-06",
+        "days": 111,
+        "end": "1997-06-24"
+      },
+      {
+        "start": "1997-06-26",
+        "days": 111,
+        "end": "1997-10-14"
+      },
+      {
+        "start": "1997-10-16",
+        "days": 111,
+        "end": "1998-02-03"
+      },
+      {
+        "start": "1998-02-05",
+        "days": 111,
+        "end": "1998-05-26"
+      },
+      {
+        "start": "1998-05-28",
+        "days": 111,
+        "end": "1998-09-15"
+      },
+      {
+        "start": "1998-09-17",
+        "days": 111,
+        "end": "1999-01-05"
+      },
+      {
+        "start": "1999-01-07",
+        "days": 111,
+        "end": "1999-04-27"
+      },
+      {
+        "start": "1999-04-29",
+        "days": 111,
+        "end": "1999-08-17"
+      },
+      {
+        "start": "1999-08-19",
+        "days": 111,
+        "end": "1999-12-07"
+      },
+      {
+        "start": "1999-12-09",
+        "days": 111,
+        "end": "2000-03-28"
+      },
+      {
+        "start": "2000-03-30",
+        "days": 111,
+        "end": "2000-07-18"
+      }
+    ]
+  },
+  "fields": {
+    "ocean_cells": 11845,
+    "surface": {
+      "sla": {
+        "missing_fraction": 0.0,
+        "min": -0.4655,
+        "max": 0.5272,
+        "mean": 0.0197,
+        "within_plausible_range": true
+      },
+      "sss": {
+        "missing_fraction": 0.0,
+        "min": 27.6859,
+        "max": 39.9994,
+        "mean": 34.7168,
+        "within_plausible_range": true
+      },
+      "sst": {
+        "missing_fraction": 0.0,
+        "min": 15.04,
+        "max": 36.12,
+        "mean": 27.9801,
+        "within_plausible_range": true
+      },
+      "uo": {
+        "missing_fraction": 0.0,
+        "min": -1.78,
+        "max": 2.287,
+        "mean": 0.0444,
+        "within_plausible_range": true
+      },
+      "uwnd": {
+        "missing_fraction": 0.0,
+        "min": -11.8867,
+        "max": 13.7904,
+        "mean": 1.5155,
+        "within_plausible_range": true
+      },
+      "vo": {
+        "missing_fraction": 0.0,
+        "min": -1.901,
+        "max": 1.8,
+        "mean": 0.0071,
+        "within_plausible_range": true
+      },
+      "vwnd": {
+        "missing_fraction": 0.0,
+        "min": -12.3308,
+        "max": 15.9367,
+        "mean": 0.3392,
+        "within_plausible_range": true
+      }
+    },
+    "target": {
+      "variable": "thetao",
+      "levels": [
+        {
+          "depth": 0.0,
+          "missing_fraction": 0.0,
+          "mean": 28.099,
+          "min": 14.767,
+          "max": 36.109
+        },
+        {
+          "depth": 5.0,
+          "missing_fraction": 0.0,
+          "mean": 28.036,
+          "min": 15.107,
+          "max": 37.828
+        },
+        {
+          "depth": 10.0,
+          "missing_fraction": 0.00794,
+          "mean": 28.022,
+          "min": 14.968,
+          "max": 37.14
+        },
+        {
+          "depth": 20.0,
+          "missing_fraction": 0.02465,
+          "mean": 27.904,
+          "min": 14.016,
+          "max": 36.585
+        },
+        {
+          "depth": 30.0,
+          "missing_fraction": 0.04846,
+          "mean": 27.624,
+          "min": 13.216,
+          "max": 33.408
+        },
+        {
+          "depth": 50.0,
+          "missing_fraction": 0.08138,
+          "mean": 26.617,
+          "min": 12.285,
+          "max": 32.196
+        },
+        {
+          "depth": 75.0,
+          "missing_fraction": 0.11777,
+          "mean": 24.632,
+          "min": 11.896,
+          "max": 31.66
+        },
+        {
+          "depth": 100.0,
+          "missing_fraction": 0.14285,
+          "mean": 22.058,
+          "min": 11.785,
+          "max": 30.38
+        },
+        {
+          "depth": 125.0,
+          "missing_fraction": 0.15027,
+          "mean": 19.515,
+          "min": 10.515,
+          "max": 27.776
+        },
+        {
+          "depth": 150.0,
+          "missing_fraction": 0.15475,
+          "mean": 17.485,
+          "min": 10.225,
+          "max": 26.582
+        },
+        {
+          "depth": 200.0,
+          "missing_fraction": 0.16176,
+          "mean": 15.008,
+          "min": 10.154,
+          "max": 23.08
+        },
+        {
+          "depth": 300.0,
+          "missing_fraction": 0.16775,
+          "mean": 12.799,
+          "min": 9.809,
+          "max": 20.406
+        },
+        {
+          "depth": 500.0,
+          "missing_fraction": 0.18067,
+          "mean": 10.986,
+          "min": 8.303,
+          "max": 18.015
+        },
+        {
+          "depth": 700.0,
+          "missing_fraction": 0.1897,
+          "mean": 9.634,
+          "min": 6.729,
+          "max": 15.711
+        },
+        {
+          "depth": 1000.0,
+          "missing_fraction": 0.20422,
+          "mean": 7.621,
+          "min": 4.2,
+          "max": 13.306
+        }
+      ]
+    },
+    "monotonic_cooling_with_depth": true,
+    "temperature_inversions": []
+  },
+  "figures": [
+    "/home/eshrath/sih/reports/surface_inputs.png",
+    "/home/eshrath/sih/reports/sst_timeseries.png",
+    "/home/eshrath/sih/reports/mean_profile.png"
+  ]
+}

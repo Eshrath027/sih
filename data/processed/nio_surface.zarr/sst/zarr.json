@@ -1,0 +1,57 @@
+{
+  "shape": [
+    51,
+    100,
+    240
+  ],
+  "data_type": "float32",
+  "chunk_grid": {
+    "name": "regular",
+    "configuration": {
+      "chunk_shape": [
+        32,
+        100,
+        240
+      ]
+    }
+  },
+  "chunk_key_encoding": {
+    "name": "default",
+    "configuration": {
+      "separator": "/"
+    }
+  },
+  "fill_value": "NaN",
+  "codecs": [
+    {
+      "name": "bytes",
+      "configuration": {
+        "endian": "little"
+      }
+    },
+    {
+      "name": "zstd",
+      "configuration": {
+        "level": 0,
+        "checksum": false
+      }
+    }
+  ],
+  "attributes": {
+    "long_name": "sea surface temperature",
+    "units": "degC",
+    "valid_min": -300,
+    "valid_max": 4500,
+    "regrid_method": "nearest",
+    "source": "NOAA OISST v2.1",
+    "_FillValue": "AAAAAAAA+H8="
+  },
+  "dimension_names": [
+    "time",
+    "lat",
+    "lon"
+  ],
+  "zarr_format": 3,
+  "node_type": "array",
+  "storage_transformers": []
+}

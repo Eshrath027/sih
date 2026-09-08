@@ -1,6 +1,6 @@
 .env
-data/
-reports/
+# data/
+# reports/
 __pycache__/
 *.pyc
 .venv/

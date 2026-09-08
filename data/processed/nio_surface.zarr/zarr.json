@@ -1,0 +1,581 @@
+{
+  "attributes": {
+    "id": "oisst-avhrr-v02r01.20040324.nc",
+    "naming_authority": "gov.noaa.ncei",
+    "cdm_data_type": "Grid",
+    "geospatial_lat_units": "degrees_north",
+    "geospatial_lon_units": "degrees_east",
+    "metadata_link": "https://doi.org/10.25921/RE9P-PT57",
+    "ncei_template_version": "NCEI_NetCDF_Grid_Template_v2.0",
+    "sensor": "Thermometer, AVHRR",
+    "Metadata_Conventions": "Unidata Dataset Discovery v1.0",
+    "contact": "servicedesk.cmems@mercator-ocean.eu",
+    "creator_name": "CMEMS - Sea Level Thematic Assembly Center",
+    "geospatial_vertical_max": 0.0,
+    "geospatial_vertical_positive": "down",
+    "geospatial_vertical_resolution": "point",
+    "geospatial_vertical_units": "m",
+    "ssalto_duacs_comment": "The reference mission used for the altimeter inter-calibration processing is Topex/Poseidon between 1993-01-01 and 2002-04-23, Jason-1 between 2002-04-24 and 2008-10-18, OSTM/Jason-2 between 2008-10-19 and 2016-06-25, Jason-3 since 2016-06-25.",
+    "time_coverage_duration": "P1D",
+    "time_coverage_resolution": "P1D",
+    "copernicusmarine_version": "2.4.1",
+    "Scaling_Equation": "(scale_factor*data) + add_offset",
+    "easternmost_longitude": "359.9375",
+    "grid_resolution": "0.125 degrees",
+    "netcdf_version_id": "4.9.3-development of Jun  4 2023 14:13:36 ",
+    "northernmost_latitude": "89.9375",
+    "southernmost_latitude": "-89.9375",
+    "westernmost_longitude": "0.0625",
+    "lat_max": 89.875,
+    "lat_min": -89.875,
+    "lat_res": 0.25,
+    "lon_max": 179.875,
+    "lon_min": -179.875,
+    "lon_res": 0.25,
+    "model": "ECMWF ERA5 Reanalysis",
+    "title": "OceanEmbed harmonized daily fields, North Indian Ocean",
+    "resolution": "0.25 degree",
+    "domain": "5.0-30.0N, 45.0-105.0E",
+    "synthetic": "no"
+  },
+  "zarr_format": 3,
+  "consolidated_metadata": {
+    "kind": "inline",
+    "must_understand": false,
+    "metadata": {
+      "lat": {
+        "shape": [
+          100
+        ],
+        "data_type": "float64",
+        "chunk_grid": {
+          "name": "regular",
+          "configuration": {
+            "chunk_shape": [
+              100
+            ]
+          }
+        },
+        "chunk_key_encoding": {
+          "name": "default",
+          "configuration": {
+            "separator": "/"
+          }
+        },
+        "fill_value": "NaN",
+        "codecs": [
+          {
+            "name": "bytes",
+            "configuration": {
+              "endian": "little"
+            }
+          },
+          {
+            "name": "zstd",
+            "configuration": {
+              "level": 0,
+              "checksum": false
+            }
+          }
+        ],
+        "attributes": {
+          "_FillValue": "AAAAAAAA+H8="
+        },
+        "dimension_names": [
+          "lat"
+        ],
+        "zarr_format": 3,
+        "node_type": "array",
+        "storage_transformers": []
+      },
+      "lon": {
+        "shape": [
+          240
+        ],
+        "data_type": "float64",
+        "chunk_grid": {
+          "name": "regular",
+          "configuration": {
+            "chunk_shape": [
+              240
+            ]
+          }
+        },
+        "chunk_key_encoding": {
+          "name": "default",
+          "configuration": {
+            "separator": "/"
+          }
+        },
+        "fill_value": "NaN",
+        "codecs": [
+          {
+            "name": "bytes",
+            "configuration": {
+              "endian": "little"
+            }
+          },
+          {
+            "name": "zstd",
+            "configuration": {
+              "level": 0,
+              "checksum": false
+            }
+          }
+        ],
+        "attributes": {
+          "_FillValue": "AAAAAAAA+H8="
+        },
+        "dimension_names": [
+          "lon"
+        ],
+        "zarr_format": 3,
+        "node_type": "array",
+        "storage_transformers": []
+      },
+      "sla": {
+        "shape": [
+          51,
+          100,
+          240
+        ],
+        "data_type": "float32",
+        "chunk_grid": {
+          "name": "regular",
+          "configuration": {
+            "chunk_shape": [
+              32,
+              100,
+              240
+            ]
+          }
+        },
+        "chunk_key_encoding": {
+          "name": "default",
+          "configuration": {
+            "separator": "/"
+          }
+        },
+        "fill_value": "NaN",
+        "codecs": [
+          {
+            "name": "bytes",
+            "configuration": {
+              "endian": "little"
+            }
+          },
+          {
+            "name": "zstd",
+            "configuration": {
+              "level": 0,
+              "checksum": false
+            }
+          }
+        ],
+        "attributes": {
+          "ancillary_variables": "err_sla",
+          "comment": "The sea level anomaly is the sea surface height above mean sea surface; it is referenced to the [1993, 2012] period; see the product user manual for details",
+          "grid_mapping": "crs",
+          "long_name": "Sea level anomaly",
+          "standard_name": "sea_surface_height_above_sea_level",
+          "units": "m",
+          "regrid_method": "conservative",
+          "_FillValue": "AAAAAAAA+H8="
+        },
+        "dimension_names": [
+          "time",
+          "lat",
+          "lon"
+        ],
+        "zarr_format": 3,
+        "node_type": "array",
+        "storage_transformers": []
+      },
+      "sss": {
+        "shape": [
+          51,
+          100,
+          240
+        ],
+        "data_type": "float32",
+        "chunk_grid": {
+          "name": "regular",
+          "configuration": {
+            "chunk_shape": [
+              32,
+              100,
+              240
+            ]
+          }
+        },
+        "chunk_key_encoding": {
+          "name": "default",
+          "configuration": {
+            "separator": "/"
+          }
+        },
+        "fill_value": "NaN",
+        "codecs": [
+          {
+            "name": "bytes",
+            "configuration": {
+              "endian": "little"
+            }
+          },
+          {
+            "name": "zstd",
+            "configuration": {
+              "level": 0,
+              "checksum": false
+            }
+          }
+        ],
+        "attributes": {
+          "long_name": "sea surface salinity",
+          "standard_name": "sea_surface_salinity",
+          "units": ".001",
+          "regrid_method": "conservative",
+          "_FillValue": "AAAAAAAA+H8="
+        },
+        "dimension_names": [
+          "time",
+          "lat",
+          "lon"
+        ],
+        "zarr_format": 3,
+        "node_type": "array",
+        "storage_transformers": []
+      },
+      "sst": {
+        "shape": [
+          51,
+          100,
+          240
+        ],
+        "data_type": "float32",
+        "chunk_grid": {
+          "name": "regular",
+          "configuration": {
+            "chunk_shape": [
+              32,
+              100,
+              240
+            ]
+          }
+        },
+        "chunk_key_encoding": {
+          "name": "default",
+          "configuration": {
+            "separator": "/"
+          }
+        },
+        "fill_value": "NaN",
+        "codecs": [
+          {
+            "name": "bytes",
+            "configuration": {
+              "endian": "little"
+            }
+          },
+          {
+            "name": "zstd",
+            "configuration": {
+              "level": 0,
+              "checksum": false
+            }
+          }
+        ],
+        "attributes": {
+          "long_name": "sea surface temperature",
+          "units": "degC",
+          "valid_min": -300,
+          "valid_max": 4500,
+          "regrid_method": "nearest",
+          "source": "NOAA OISST v2.1",
+          "_FillValue": "AAAAAAAA+H8="
+        },
+        "dimension_names": [
+          "time",
+          "lat",
+          "lon"
+        ],
+        "zarr_format": 3,
+        "node_type": "array",
+        "storage_transformers": []
+      },
+      "time": {
+        "shape": [
+          51
+        ],
+        "data_type": "int64",
+        "chunk_grid": {
+          "name": "regular",
+          "configuration": {
+            "chunk_shape": [
+              32
+            ]
+          }
+        },
+        "chunk_key_encoding": {
+          "name": "default",
+          "configuration": {
+            "separator": "/"
+          }
+        },
+        "fill_value": 0,
+        "codecs": [
+          {
+            "name": "bytes",
+            "configuration": {
+              "endian": "little"
+            }
+          },
+          {
+            "name": "zstd",
+            "configuration": {
+              "level": 0,
+              "checksum": false
+            }
+          }
+        ],
+        "attributes": {
+          "units": "days since 1994-06-01",
+          "calendar": "proleptic_gregorian"
+        },
+        "dimension_names": [
+          "time"
+        ],
+        "zarr_format": 3,
+        "node_type": "array",
+        "storage_transformers": []
+      },
+      "uo": {
+        "shape": [
+          51,
+          100,
+          240
+        ],
+        "data_type": "float32",
+        "chunk_grid": {
+          "name": "regular",
+          "configuration": {
+            "chunk_shape": [
+              32,
+              100,
+              240
+            ]
+          }
+        },
+        "chunk_key_encoding": {
+          "name": "default",
+          "configuration": {
+            "separator": "/"
+          }
+        },
+        "fill_value": "NaN",
+        "codecs": [
+          {
+            "name": "bytes",
+            "configuration": {
+              "endian": "little"
+            }
+          },
+          {
+            "name": "zstd",
+            "configuration": {
+              "level": 0,
+              "checksum": false
+            }
+          }
+        ],
+        "attributes": {
+          "grid_mapping": "crs",
+          "long_name": "Absolute geostrophic velocity + depth Ekman + tide velocity: zonal component",
+          "standard_name": "eastward_sea_water_velocity",
+          "units": "m/s",
+          "regrid_method": "nearest",
+          "_FillValue": "AAAAAAAA+H8="
+        },
+        "dimension_names": [
+          "time",
+          "lat",
+          "lon"
+        ],
+        "zarr_format": 3,
+        "node_type": "array",
+        "storage_transformers": []
+      },
+      "uwnd": {
+        "shape": [
+          51,
+          100,
+          240
+        ],
+        "data_type": "float32",
+        "chunk_grid": {
+          "name": "regular",
+          "configuration": {
+            "chunk_shape": [
+              32,
+              100,
+              240
+            ]
+          }
+        },
+        "chunk_key_encoding": {
+          "name": "default",
+          "configuration": {
+            "separator": "/"
+          }
+        },
+        "fill_value": "NaN",
+        "codecs": [
+          {
+            "name": "bytes",
+            "configuration": {
+              "endian": "little"
+            }
+          },
+          {
+            "name": "zstd",
+            "configuration": {
+              "level": 0,
+              "checksum": false
+            }
+          }
+        ],
+        "attributes": {
+          "long_name": "stress-equivalent wind eastward component at 10 m",
+          "standard_name": "eastward_wind",
+          "units": "m s-1",
+          "valid_max": 5000,
+          "valid_min": -5000,
+          "regrid_method": "nearest",
+          "_FillValue": "AAAAAAAA+H8="
+        },
+        "dimension_names": [
+          "time",
+          "lat",
+          "lon"
+        ],
+        "zarr_format": 3,
+        "node_type": "array",
+        "storage_transformers": []
+      },
+      "vo": {
+        "shape": [
+          51,
+          100,
+          240
+        ],
+        "data_type": "float32",
+        "chunk_grid": {
+          "name": "regular",
+          "configuration": {
+            "chunk_shape": [
+              32,
+              100,
+              240
+            ]
+          }
+        },
+        "chunk_key_encoding": {
+          "name": "default",
+          "configuration": {
+            "separator": "/"
+          }
+        },
+        "fill_value": "NaN",
+        "codecs": [
+          {
+            "name": "bytes",
+            "configuration": {
+              "endian": "little"
+            }
+          },
+          {
+            "name": "zstd",
+            "configuration": {
+              "level": 0,
+              "checksum": false
+            }
+          }
+        ],
+        "attributes": {
+          "grid_mapping": "crs",
+          "long_name": "Absolute geostrophic velocity + depth Ekman + tide velocity: meridional component",
+          "standard_name": "northward_sea_water_velocity",
+          "units": "m/s",
+          "regrid_method": "nearest",
+          "_FillValue": "AAAAAAAA+H8="
+        },
+        "dimension_names": [
+          "time",
+          "lat",
+          "lon"
+        ],
+        "zarr_format": 3,
+        "node_type": "array",
+        "storage_transformers": []
+      },
+      "vwnd": {
+        "shape": [
+          51,
+          100,
+          240
+        ],
+        "data_type": "float32",
+        "chunk_grid": {
+          "name": "regular",
+          "configuration": {
+            "chunk_shape": [
+              32,
+              100,
+              240
+            ]
+          }
+        },
+        "chunk_key_encoding": {
+          "name": "default",
+          "configuration": {
+            "separator": "/"
+          }
+        },
+        "fill_value": "NaN",
+        "codecs": [
+          {
+            "name": "bytes",
+            "configuration": {
+              "endian": "little"
+            }
+          },
+          {
+            "name": "zstd",
+            "configuration": {
+              "level": 0,
+              "checksum": false
+            }
+          }
+        ],
+        "attributes": {
+          "long_name": "stress-equivalent wind northward component at 10 m",
+          "standard_name": "northward_wind",
+          "units": "m s-1",
+          "valid_max": 5000,
+          "valid_min": -5000,
+          "regrid_method": "nearest",
+          "_FillValue": "AAAAAAAA+H8="
+        },
+        "dimension_names": [
+          "time",
+          "lat",
+          "lon"
+        ],
+        "zarr_format": 3,
+        "node_type": "array",
+        "storage_transformers": []
+      }
+    }
+  },
+  "node_type": "group"
+}

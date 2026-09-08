@@ -1,0 +1,204 @@
+{
+  "input_variables": [
+    "sst",
+    "sla",
+    "sss",
+    "uo",
+    "vo",
+    "uwnd",
+    "vwnd"
+  ],
+  "n_input_channels": 7,
+  "depths": [
+    0.0,
+    5.0,
+    10.0,
+    20.0,
+    30.0,
+    50.0,
+    75.0,
+    100.0,
+    125.0,
+    150.0,
+    200.0,
+    300.0,
+    500.0,
+    700.0,
+    1000.0
+  ],
+  "grid": {
+    "lat": 100,
+    "lon": 240
+  },
+  "split_codes": {
+    "train": 0,
+    "val": 1,
+    "test": 2
+  },
+  "split_note": "each shard carries a per-day 'split' array; filter on it rather than assuming a whole shard belongs to one split",
+  "normalized": true,
+  "normalization": "per-variable for inputs, per-depth-level for the target",
+  "stats_file": "norm_stats.json",
+  "land_fill_value": 0.0,
+  "splits": {
+    "train": [
+      "1994-06-01",
+      "2006-12-31"
+    ],
+    "val": [
+      "2007-01-01",
+      "2007-12-31"
+    ],
+    "test": [
+      "2008-01-01",
+      "2009-10-31"
+    ]
+  },
+  "shards": [
+    {
+      "year": 1994,
+      "file": "oceanembed_1994.npz",
+      "days": 2,
+      "size_mb": 1.9,
+      "split_counts": {
+        "train": 2
+      }
+    },
+    {
+      "year": 1995,
+      "file": "oceanembed_1995.npz",
+      "days": 4,
+      "size_mb": 3.7,
+      "split_counts": {
+        "train": 4
+      }
+    },
+    {
+      "year": 1996,
+      "file": "oceanembed_1996.npz",
+      "days": 3,
+      "size_mb": 2.8,
+      "split_counts": {
+        "train": 3
+      }
+    },
+    {
+      "year": 1997,
+      "file": "oceanembed_1997.npz",
+      "days": 3,
+      "size_mb": 2.8,
+      "split_counts": {
+        "train": 3
+      }
+    },
+    {
+      "year": 1998,
+      "file": "oceanembed_1998.npz",
+      "days": 3,
+      "size_mb": 2.8,
+      "split_counts": {
+        "train": 3
+      }
+    },
+    {
+      "year": 1999,
+      "file": "oceanembed_1999.npz",
+      "days": 4,
+      "size_mb": 3.7,
+      "split_counts": {
+        "train": 4
+      }
+    },
+    {
+      "year": 2000,
+      "file": "oceanembed_2000.npz",
+      "days": 3,
+      "size_mb": 2.8,
+      "split_counts": {
+        "train": 3
+      }
+    },
+    {
+      "year": 2001,
+      "file": "oceanembed_2001.npz",
+      "days": 3,
+      "size_mb": 2.8,
+      "split_counts": {
+        "train": 3
+      }
+    },
+    {
+      "year": 2002,
+      "file": "oceanembed_2002.npz",
+      "days": 3,
+      "size_mb": 2.8,
+      "split_counts": {
+        "train": 3
+      }
+    },
+    {
+      "year": 2003,
+      "file": "oceanembed_2003.npz",
+      "days": 4,
+      "size_mb": 3.7,
+      "split_counts": {
+        "train": 4
+      }
+    },
+    {
+      "year": 2004,
+      "file": "oceanembed_2004.npz",
+      "days": 3,
+      "size_mb": 2.8,
+      "split_counts": {
+        "train": 3
+      }
+    },
+    {
+      "year": 2005,
+      "file": "oceanembed_2005.npz",
+      "days": 3,
+      "size_mb": 2.8,
+      "split_counts": {
+        "train": 3
+      }
+    },
+    {
+      "year": 2006,
+      "file": "oceanembed_2006.npz",
+      "days": 4,
+      "size_mb": 3.7,
+      "split_counts": {
+        "train": 4
+      }
+    },
+    {
+      "year": 2007,
+      "file": "oceanembed_2007.npz",
+      "days": 3,
+      "size_mb": 2.8,
+      "split_counts": {
+        "val": 3
+      }
+    },
+    {
+      "year": 2008,
+      "file": "oceanembed_2008.npz",
+      "days": 3,
+      "size_mb": 2.8,
+      "split_counts": {
+        "test": 3
+      }
+    },
+    {
+      "year": 2009,
+      "file": "oceanembed_2009.npz",
+      "days": 3,
+      "size_mb": 2.8,
+      "split_counts": {
+        "test": 3
+      }
+    }
+  ],
+  "total_size_mb": 47.5
+}
